@@ -26,7 +26,7 @@ import org.w3c.dom.NodeList;
         	Document doc = dBuilder.parse(config);
         	
         	doc.getDocumentElement().normalize();
-        	NodeList settings = doc.getDocumentElement().getChildNodes();
+        	NodeList settings = doc.getFirstChild().getChildNodes();
         	
         	for (int temp = 0; temp < settings.getLength(); temp++) {
         		Node node = settings.item(temp);
@@ -45,25 +45,42 @@ import org.w3c.dom.NodeList;
  
         public static void Set(String setting, String value)
         {
+        	try{
         	DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
     		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-    		Document doc = docBuilder.parse(config.getAbsolutePath());
+    		Document doc = docBuilder.parse(configPath);
     		
+    		Node root = doc.getFirstChild();
+    		NodeList settings = root.getChildNodes();
     		
+    		boolean alreadyExists = false;
     		
-            XDocument file = XDocument.Load(configFile);
-            try
-            {
-                XElement element = file.Root.Elements(setting).Single();
-                element.Value = value;
-                file.Save(configFile);
-            }
-            catch (InvalidOperationException) //This exception occurs when a the setting doesn't already exist
-            {
-                XElement element = new XElement(setting, value);
-                file.Root.Add(element);
-                file.Save(configFile);
-            }
+    		for (int temp = 0; temp < settings.getLength(); temp++) {
+        		Node node = settings.item(temp);
+        		if(node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName() == setting){
+        			node.setNodeValue(value);
+        			alreadyExists = true;
+        		}
+    		}
+    		
+    		if(!alreadyExists){
+    			Element el = doc.createElement(setting);
+    			el.setNodeValue(value);
+        		root.appendChild(el);
+    			
+    		}
+    		
+    		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    		Transformer transformer = transformerFactory.newTransformer();
+    		DOMSource source = new DOMSource(doc);
+    		StreamResult result = new StreamResult(new File(configPath));
+    		transformer.transform(source, result);
+        	}
+        	catch(Exception e){
+        		//TODO Error handling
+        		
+        	}
+           
         }
  
         public static void Reset()
