@@ -14,6 +14,9 @@ public class UitvalChecker {
 		}
 		}
 	
+	public static void random(String hoi){
+		System.out.println(hoi);
 	
+	}
 
 }
