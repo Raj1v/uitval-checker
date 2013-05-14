@@ -39,7 +39,7 @@ public void logger_info()
 	try {
 		Writer output;
 		output = new BufferedWriter(new FileWriter(this.get_log(),true));
-		output.append("\n[info]" + this.get_time() + " Test");
+		output.append("\n[info]" + this.get_time() + " Message");
 		output.close();
 	} catch (IOException e) {
 		e.printStackTrace();
