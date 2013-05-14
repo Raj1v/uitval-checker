@@ -5,14 +5,13 @@ import java.net.URL;
 
 public class UitvalChecker {
 
-	/**
-	 * @param args
-	 */
+	static String Klas = "CG3A";
+	
 	public static void main(String[] args) {
 		try
 		{
 		System.out.println("UitvalChecker V1.0");
-		URL infoweb = new URL("http://www.cygnusgymnasium.nl/ftp_cg/roosters/infoweb/index.php?ref=5&id='CG3A'");
+		URL infoweb = new URL("http://www.cygnusgymnasium.nl/ftp_cg/roosters/infoweb/index.php?ref=5&id='" +  Klas + "'");
 		BufferedReader bf = new BufferedReader(new InputStreamReader(infoweb.openStream()));
 		String html = null;
 		String line = null;
