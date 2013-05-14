@@ -33,28 +33,36 @@ private File get_log()
 	if(!log.exists()){this.file_checker();}
 	return log;
 }
-public void logger_info()
+public void logger_info(String message)
 {
 	
 	try {
 		Writer output;
 		output = new BufferedWriter(new FileWriter(this.get_log(),true));
-		output.append("\n[info]" + this.get_time() + " Message");
+		output.append("\n[info]" + this.get_time() + " " + message);
 		output.close();
 	} catch (IOException e) {
 		e.printStackTrace();
 	} 
 	}
-public void logger_warning()
+public void logger_warning(String message)
 {
-	
+	try {
+		Writer output;
+		output = new BufferedWriter(new FileWriter(this.get_log(),true));
+		output.append("\n[warning]" + this.get_time() + " " + message);
+		output.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
 }
 private String get_time()
 {
 	String time = null;
 	Calendar cal = Calendar.getInstance();
 	SimpleDateFormat sdf = new SimpleDateFormat("kk:mm:ss");
-	time = "[" + sdf.format(cal.getTime()) + "]";
+	SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yy");
+	time = "[" + sdf2.format(cal.getTime()) + "][" + sdf.format(cal.getTime()) + "]";
 	return time;
 }
 }

@@ -10,7 +10,6 @@ public class UitvalChecker {
 	public static void main(String[] args) {
 		try
 		{
-		logger.logger_info();
 		System.out.println("UitvalChecker V1.0");
 		URL infoweb = new URL("http://www.cygnusgymnasium.nl/ftp_cg/roosters/infoweb/index.php?ref=5&id='" +  Klas + "'");
 		BufferedReader bf = new BufferedReader(new InputStreamReader(infoweb.openStream()));
@@ -23,7 +22,7 @@ public class UitvalChecker {
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			logger.logger_warning("Error while trying to pull html data. error:" + e);
 		}
 		}
 
