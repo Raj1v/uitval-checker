@@ -6,10 +6,11 @@ import java.net.URL;
 public class UitvalChecker {
 
 	static String Klas = "CG3A";
-	
+	static logger logger = new logger();
 	public static void main(String[] args) {
 		try
 		{
+		logger.file_checker();
 		System.out.println("UitvalChecker V1.0");
 		URL infoweb = new URL("http://www.cygnusgymnasium.nl/ftp_cg/roosters/infoweb/index.php?ref=5&id='" +  Klas + "'");
 		BufferedReader bf = new BufferedReader(new InputStreamReader(infoweb.openStream()));
