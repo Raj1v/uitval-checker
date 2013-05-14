@@ -2,15 +2,21 @@ import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
     public class Config
     {
-        static File config = new File("uitval/config.xml");
+    	static String configPath = "/uitval/config.xml";
+        static File config = new File(configPath);
  
         public static String Get(String setting)
         {
@@ -39,6 +45,12 @@ import org.w3c.dom.NodeList;
  
         public static void Set(String setting, String value)
         {
+        	DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+    		Document doc = docBuilder.parse(config.getAbsolutePath());
+    		
+    		
+    		
             XDocument file = XDocument.Load(configFile);
             try
             {
@@ -56,19 +68,26 @@ import org.w3c.dom.NodeList;
  
         public static void Reset()
         {
-            XDocument file = new XDocument();
-            XElement root = new XElement("config");
- 
-            XElement ip = new XElement("ip", "");
-            XElement version = new XElement("version", "");
-            XElement limit = new XElement("limit", "");
- 
-            //Add the elements as childs of the root
-            root.Add(ip);
-            root.Add(version);
-            root.Add(limit);
- 
-            file.Add(root);
-            file.Save(configFile);
+        	try{
+        	DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+    		
+    		Document doc = docBuilder.newDocument();
+    		Element rootElement = doc.createElement("config");
+    		doc.appendChild(rootElement);
+    		
+    		Element klas = doc.createElement("klas");
+    		rootElement.appendChild(klas);
+    		
+    		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    		Transformer transformer = transformerFactory.newTransformer();
+    		DOMSource source = new DOMSource(doc);
+    		StreamResult result = new StreamResult(config);
+    		
+    		transformer.transform(source, result);
+        	}
+        	catch(Exception e){
+        		//TODO : error handling
+        	}
         }
     }
