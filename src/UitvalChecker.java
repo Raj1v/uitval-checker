@@ -1,29 +1,30 @@
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 
 public class UitvalChecker {
-
-	static String Klas = "CG3A";
-	static logger logger = new logger();
-	public static void main(String[] args) {
-		try
-		{
-		System.out.println("UitvalChecker V1.0");
-		URL infoweb = new URL("http://www.cygnusgymnasium.nl/ftp_cg/roosters/infoweb/index.php?ref=5&id='" +  Klas + "'");
-		BufferedReader bf = new BufferedReader(new InputStreamReader(infoweb.openStream()));
-		String html = null;
-		String line = null;
-		while((line = bf.readLine())!=null)
-		{
-			html = html + "\n" + line;
-		}
-		}
-		catch(Exception e)
-		{
-			logger.logger_warning("Error while trying to pull html data. error:" + e);
-		}
-		}
-
+public static void main(String[] args)
+{
+int leerlingNummer = 100616;
+String url = "http://www.cygnusgymnasium.nl/ftp_cg/roosters/infoweb/index.php?ref=2&id=" + leerlingNummer;
+Document infoweb = null;
+try {
+	infoweb = Jsoup.connect(url).get();
+} catch (Exception e) {
+	System.out.println("Link not found!");
+}
+String[][] hours = new String[5][9];
+infoweb.getElementsByClass("vrij").html("Vrij");
+Elements oneven = infoweb.select(".oneven > td,.even > td");
+for(Element a : oneven)
+{
+System.out.println(a.text());
+}
+}
 }
