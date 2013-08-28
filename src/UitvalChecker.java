@@ -19,34 +19,49 @@ public class UitvalChecker {
 			System.out.println("Link not found!");
 		}
 		infoweb.getElementsByClass("vrij").html("Vrij");
-		Elements uren = infoweb.select("tr.oneven > td");
-		//System.out.println(uren.size());
+		Elements uren = infoweb.select("tr.oneven > td , tr.even > td");
+		//System.out.println(uren.text());
 		
-		Element[] maandag = new Element[9];
-		Element[] dinsdag = new Element[9];
-		Element[] woensdag = new Element[9];
-		Element[] donderdag = new Element[9];
-		Element[] vrijdag = new Element[9];
+		String[] maandag = new String[9];
+		String[] dinsdag = new String[9];
+		String[] woensdag = new String[9];
+		String[] donderdag = new String[9];
+		String[] vrijdag = new String[9];
 		
 		int dag = 1;
+		int index = 0;
 		
 		for(Element uur : uren){
+			//System.out.println(index);
 			switch(dag){
 				case 1:
-					
+					maandag[index] = uur.text();
+					//System.out.println(uur.text());
+					dag++;
 					break;
 				case 2:
+					dinsdag[index] = uur.text();
+					dag++;
 					break;
 				case 3:
+					woensdag[index] = uur.text();
+					dag++;
 					break;
 				case 4:
+					donderdag[index] = uur.text();
+					dag++;
 					break;
 				case 5:
+					vrijdag[index] = uur.text();
+					dag = 1;
+					index++;
 					break;
 			}
-			System.out.println(uur.text());
+			
 		}
-		
+		for(String e : woensdag){
+			System.out.println(e);
+		}
 		/*int c = 1;
 		
 		for (Element a : uren) {
