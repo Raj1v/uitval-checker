@@ -1,5 +1,8 @@
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -18,6 +21,27 @@ public class UitvalChecker {
 	public static void main(String[] args) {
 		
 		LeesRooster();
+		
+		DateFormat dateFormat = new SimpleDateFormat("u");
+		Calendar cal = Calendar.getInstance();
+		int day = Integer.parseInt(dateFormat.format(cal.getTime()));
+		
+		switch(day){
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 7:
+			break;
+		}
 		
 		for(String e : maandag){
 			System.out.println(e);
