@@ -9,25 +9,26 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class UitvalChecker {
-	
+
 	static String[] maandag = new String[9];
 	static String[] dinsdag = new String[9];
 	static String[] woensdag = new String[9];
 	static String[] donderdag = new String[9];
 	static String[] vrijdag = new String[9];
-	
+
 	public static void main(String[] args) {
-		
+
 		LeesRooster();
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("u");
+		DateFormat hourFormat = new SimpleDateFormat("H");
 		Calendar cal = Calendar.getInstance();
 		int day = Integer.parseInt(dateFormat.format(cal.getTime()));
-		int uur = 0;
-		if(uur > 4){
+		int hour = Integer.parseInt(hourFormat.format(cal.getTime()));
+		if (hour > 4) {
 			day++;
 		}
-		switch(day){
+		switch (day) {
 		case 6:
 			day = 1;
 		case 7:
@@ -35,41 +36,35 @@ public class UitvalChecker {
 		case 8:
 			day = 1;
 		case 1:
-			for(String e : maandag){
+			for (String e : maandag) {
 				System.out.println(e);
 			}
 			break;
 		case 2:
-			for(String e : dinsdag){
+			for (String e : dinsdag) {
 				System.out.println(e);
 			}
 			break;
 		case 3:
-			for(String e : woensdag){
+			for (String e : woensdag) {
 				System.out.println(e);
 			}
 			break;
 		case 4:
-			for(String e : donderdag){
-				System.out.println(e);
-			}
+			CheckRooster(donderdag);
 			break;
 		case 5:
-			for(String e : vrijdag){
+			for (String e : vrijdag) {
 				System.out.println(e);
 			}
 			break;
 		}
-		
-		
-		
-		
-		
+
 	}
 
-	public static void LeesRooster(){
-		int leerlingNummer = 100463;
-		//Rajiv: 462, Kasper 616
+	public static void LeesRooster() {
+		int leerlingNummer = 100616;
+		// Rajiv: 462, Kasper 616
 		String url = "http://www.cygnusgymnasium.nl/ftp_cg/roosters/infoweb/index.php?ref=2&id="
 				+ leerlingNummer;
 		Document infoweb = null;
@@ -78,43 +73,60 @@ public class UitvalChecker {
 		} catch (Exception e) {
 			System.out.println("Link not found!");
 		}
-		infoweb.getElementsByClass("vrij").html("Vrij");
-		infoweb.getElementsByClass("vervallen").html("Uitval!");
+		infoweb.getElementsByClass("vrij").html("vrij");
+		infoweb.getElementsByClass("vervallen").html("uitval");
 		Elements uren = infoweb.select("tr.oneven > td , tr.even > td");
-		//System.out.println(uren.text());
-		
-		
+		// System.out.println(uren.text());
+
 		int dag = 1;
 		int index = 0;
-		
-		for(Element uur : uren){
-			//System.out.println(index);
-			switch(dag){
-				case 1:
-					maandag[index] = uur.text();
-					//System.out.println(uur.text());
-					dag++;
-					break;
-				case 2:
-					dinsdag[index] = uur.text();
-					dag++;
-					break;
-				case 3:
-					woensdag[index] = uur.text();
-					dag++;
-					break;
-				case 4:
-					donderdag[index] = uur.text();
-					dag++;
-					break;
-				case 5:
-					vrijdag[index] = uur.text();
-					dag = 1;
-					index++;
-					break;
+
+		for (Element uur : uren) {
+			// System.out.println(index);
+			switch (dag) {
+			case 1:
+				maandag[index] = uur.text();
+				// System.out.println(uur.text());
+				dag++;
+				break;
+			case 2:
+				dinsdag[index] = uur.text();
+				dag++;
+				break;
+			case 3:
+				woensdag[index] = uur.text();
+				dag++;
+				break;
+			case 4:
+				donderdag[index] = uur.text();
+				dag++;
+				break;
+			case 5:
+				vrijdag[index] = uur.text();
+				dag = 1;
+				index++;
+				break;
 			}
-			
+
 		}
-		
+
 	}
+	public static void CheckRooster(String[] dag)
+	{
+		int EersteUur = 0;
+		while(dag[EersteUur].equals("vrij"))
+			{
+			EersteUur++;
+			}
+		EersteUur++;
+		if(dag[EersteUur].equals("uitval"))
+		{
+			System.out.println("Op het " + EersteUur + "e uur is er uitval!");
+		}
+		else
+		{
+			System.out.println("Op het " + EersteUur + "e uur is er geen uitval");
+		}
+	}
+
 }
