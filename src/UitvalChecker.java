@@ -34,22 +34,35 @@ public class UitvalChecker {
 			day = 1;
 		case 8:
 			day = 1;
-		case 1:			
+		case 1:
+			for(String e : maandag){
+				System.out.println(e);
+			}
 			break;
 		case 2:
+			for(String e : dinsdag){
+				System.out.println(e);
+			}
 			break;
 		case 3:
+			for(String e : woensdag){
+				System.out.println(e);
+			}
 			break;
 		case 4:
+			for(String e : donderdag){
+				System.out.println(e);
+			}
 			break;
 		case 5:
+			for(String e : vrijdag){
+				System.out.println(e);
+			}
 			break;
 		}
 		
 		
-		for(String e : woensdag){
-			System.out.println(e);
-		}
+		
 		
 		
 	}
