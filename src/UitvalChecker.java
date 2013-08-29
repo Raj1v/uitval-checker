@@ -114,10 +114,17 @@ public class UitvalChecker {
 	public static void CheckRooster(String[] dag)
 	{
 		int EersteUur = 0;
+		try
+		{
 		while(dag[EersteUur].equals("vrij"))
 			{
 			EersteUur++;
 			}
+		}
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			
+		}
 		EersteUur++;
 		if(dag[EersteUur].equals("uitval"))
 		{
