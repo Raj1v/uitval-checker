@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,7 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class UitvalChecker {
-
+	static Ledborg ledborg = new Ledborg();
 	static String[] maandag = new String[9];
 	static String[] dinsdag = new String[9];
 	static String[] woensdag = new String[9];
@@ -25,7 +24,7 @@ public class UitvalChecker {
 		Calendar cal = Calendar.getInstance();
 		int day = Integer.parseInt(dateFormat.format(cal.getTime()));
 		int hour = Integer.parseInt(hourFormat.format(cal.getTime()));
-		if (hour > 4) {
+		if (hour > 17) {
 			day++;
 		}
 		switch (day) {
@@ -36,19 +35,13 @@ public class UitvalChecker {
 		case 8:
 			day = 1;
 		case 1:
-			for (String e : maandag) {
-				System.out.println(e);
-			}
+			CheckRooster(maandag);
 			break;
 		case 2:
-			for (String e : dinsdag) {
-				System.out.println(e);
-			}
+			CheckRooster(dinsdag);
 			break;
 		case 3:
-			for (String e : woensdag) {
-				System.out.println(e);
-			}
+			CheckRooster(woensdag);
 			break;
 		case 4:
 			CheckRooster(donderdag);
@@ -128,11 +121,25 @@ public class UitvalChecker {
 		EersteUur++;
 		if(dag[EersteUur].equals("uitval"))
 		{
-			System.out.println("Op het " + EersteUur + "e uur is er uitval!");
+			//Uitval eerste les uur!
+			ledborg.ledColor(100);//Rood
 		}
 		else
 		{
 			System.out.println("Op het " + EersteUur + "e uur is er geen uitval");
+			boolean uitval = false;
+			for(String e : dag)
+			{
+				if (e.equals("uitval")){uitval = true;}
+			}
+			if(uitval)
+			{
+				ledborg.ledColor(011);//Blauw
+			}
+			else
+			{
+				ledborg.ledColor(000);
+			}
 		}
 	}
 
