@@ -57,7 +57,7 @@ public class UitvalChecker {
 
 	public static void LeesRooster() {
 		int leerlingNummer = 100616;
-		// Rajiv: 462, Kasper 616
+		// Rajiv: 462, Kasper 616, Jesse 469
 		String url = "http://www.cygnusgymnasium.nl/ftp_cg/roosters/infoweb/index.php?ref=2&id="
 				+ leerlingNummer;
 		Document infoweb = null;
