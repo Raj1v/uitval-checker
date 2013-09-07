@@ -51,6 +51,10 @@ public class UitvalChecker {
 				System.out.println(e);
 			}
 			break;
+		/*	case default:
+		*	day =1;
+		*	break;
+		*/
 		}
 
 	}
@@ -71,7 +75,7 @@ public class UitvalChecker {
 		Elements uren = infoweb.select("tr.oneven > td , tr.even > td");
 		// System.out.println(uren.text());
 
-		int dag = 1;
+		short int dag = 1;
 		int index = 0;
 
 		for (Element uur : uren) {
@@ -104,15 +108,14 @@ public class UitvalChecker {
 		}
 
 	}
-	public static void CheckRooster(String[] dag)
+	public static void CheckRooster(String[] dag)	
 	{
-		int EersteUur = 0;
+		short int EersteUur = 0; //SHORT INTS!!!!
 		try
 		{
-		while(dag[EersteUur].equals("vrij"))
-			{
+		while(dag[EersteUur].equals("vrij")){
 			EersteUur++;
-			}
+		}//accolades kunnen weg bij enkele statements
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
@@ -122,7 +125,7 @@ public class UitvalChecker {
 		if(dag[EersteUur].equals("uitval"))
 		{
 			//Uitval eerste les uur!
-			ledborg.ledColor(100);//Rood
+			ledborg.ledColor(100);//Rood   niet helemaal netjes om INTS gebruiken bij STANDEN gebruik daarvoor ENUMS
 		}
 		else
 		{
